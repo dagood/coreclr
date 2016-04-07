@@ -21,12 +21,27 @@
     <ArchitectureSpecificNativeFile Include="$(BinDir)sosdocsunix.txt"/>
     <ArchitectureSpecificNativeFile Include="$(BinDir)System.Globalization.Native.dylib"/>
 
+    <ArchitectureSpecificNativeSymbol Include="$(BinDir)libcoreclr.dylib.dwarf"/>
+    <ArchitectureSpecificNativeSymbol Include="$(BinDir)libdbgshim.dylib.dwarf"/>
+    <ArchitectureSpecificNativeSymbol Include="$(BinDir)libmscordaccore.dylib.dwarf"/>
+    <ArchitectureSpecificNativeSymbol Include="$(BinDir)libmscordbi.dylib.dwarf"/>
+    <ArchitectureSpecificNativeSymbol Include="$(BinDir)libsos.dylib.dwarf"/>
+    <ArchitectureSpecificNativeSymbol Include="$(BinDir)System.Globalization.Native.dylib.dwarf"/>
+    <ArchitectureSpecificNativeSymbol Include="..\_.pdb"/>
+
+    <AdditionalLibPackageExcludes Include="%2A%2A\%2A.dwarf" />
+
     <ArchitectureSpecificLibFile Include="$(BinDir)mscorlib.dll"/>
 
     <ArchitectureSpecificToolFile Include="$(BinDir)crossgen"/>
 
     <File Include="@(ArchitectureSpecificNativeFile)">
       <TargetPath>runtimes/$(PackageTargetRuntime)/native</TargetPath>
+    </File>
+
+    <File Include="@(ArchitectureSpecificNativeSymbol)">
+      <TargetPath>runtimes/$(PackageTargetRuntime)/native</TargetPath>
+      <IsSymbolFile>true</IsSymbolFile>
     </File>
 
     <!-- Using lib/netstandard1.0 here.  There is no TFM for this since it is a runtime itself. -->
