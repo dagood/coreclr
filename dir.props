@@ -159,7 +159,9 @@
     <PackagePlatform Condition="'$(PackagePlatform)' == ''">$(Platform)</PackagePlatform>
     <PackagePlatform Condition="'$(PackagePlatform)' == 'amd64'">x64</PackagePlatform>
     <PackageOutputPath>$(PackagesBinDir)/pkg/</PackageOutputPath>
-    <SymbolPackageOutputPath>$(PackagesBinDir)/symbolpkg/</SymbolPackageOutputPath> 
+    <SymbolPackageOutputPath>$(PackagesBinDir)/symbolpkg/</SymbolPackageOutputPath>
+    <PrefixedSymbolPackageOutputPath>$(PackagesBinDir)/prefixedsymbolpkg/</PrefixedSymbolPackageOutputPath>
+    <PackPrefixedSymbolPackage>true</PackPrefixedSymbolPackage>
   </PropertyGroup>
 
 </Project>

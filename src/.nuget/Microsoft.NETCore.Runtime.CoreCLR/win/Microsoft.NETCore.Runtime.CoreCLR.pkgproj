@@ -8,6 +8,10 @@
     <MinOSForArch>win7</MinOSForArch>
     <MinOSForArch Condition="$(PackagePlatform.StartsWith('arm'))">win8</MinOSForArch>
     <PackageTargetRuntime>$(MinOSForArch)-$(PackagePlatform)</PackageTargetRuntime>
+
+    <ArchitectureSpecificNativeFileTargetPath>runtimes/$(PackageTargetRuntime)/native</ArchitectureSpecificNativeFileTargetPath>
+    <!-- Using lib/netstandard1.0 here.  There is no TFM for this since it is a runtime itself. -->
+    <ArchitectureSpecificLibFileTargetPath>runtimes/$(PackageTargetRuntime)/lib/netstandard1.0</ArchitectureSpecificLibFileTargetPath>
   </PropertyGroup>
   
   <ItemGroup>
@@ -16,24 +20,35 @@
     <ArchitectureSpecificNativeFile Include="$(BinDir)dbgshim.dll"/>
     <ArchitectureSpecificNativeFile Include="$(BinDir)mscordaccore.dll"/>
     <ArchitectureSpecificNativeFile Include="$(BinDir)mscordbi.dll"/>
-    <ArchitectureSpecificNativeFile Include="$(BinDir)mscorlib.ni.dll"/>
     <ArchitectureSpecificNativeFile Include="$(BinDir)mscorrc.debug.dll"/>
     <ArchitectureSpecificNativeFile Include="$(BinDir)mscorrc.dll"/>
     <ArchitectureSpecificNativeFile Include="$(BinDir)sos.dll"/>
+    <ArchitectureSpecificNativeFileWithoutSymbols Include="$(BinDir)mscorlib.ni.dll"/>
 
     <ArchitectureSpecificLibFile Include="$(BinDir)mscorlib.dll"/>
 
+    <ArchitectureSpecificFile Include="@(ArchitectureSpecificNativeFile)">
+      <TargetPath>$(ArchitectureSpecificNativeFileTargetPath)</TargetPath>
+    </ArchitectureSpecificFile>
+
+    <ArchitectureSpecificFile Include="@(ArchitectureSpecificLibFile)">
+      <TargetPath>$(ArchitectureSpecificLibFileTargetPath)</TargetPath>
+    </ArchitectureSpecificFile>
+
+    <!-- Find pdbs in the PDB directory. -->
+    <SymbolFile Include="@(ArchitectureSpecificFile -> '%(RootDir)%(Directory)PDB\%(Filename).pdb')">
+      <IsSymbolFile>true</IsSymbolFile>
+    </SymbolFile>
+
+    <!-- Include native files without pdbs later so that the SymbolFile items all exist. -->
+    <ArchitectureSpecificFile Include="@(ArchitectureSpecificNativeFileWithoutSymbols)">
+      <TargetPath>$(ArchitectureSpecificNativeFileTargetPath)</TargetPath>
+    </ArchitectureSpecificFile>
+
     <ArchitectureSpecificToolFile Include="$(BinDir)crossgen.exe"/>
 
-    <File Include="@(ArchitectureSpecificNativeFile)">
-      <TargetPath>runtimes/$(PackageTargetRuntime)/native</TargetPath>
-    </File>
-
-    <!-- Using lib/netstandard1.0 here.  There is no TFM for this since it is a runtime itself. -->
-    <File Include="@(ArchitectureSpecificLibFile)">
-      <TargetPath>runtimes/$(PackageTargetRuntime)/lib/netstandard1.0</TargetPath>
-    </File>
-    
+    <File Include="@(SymbolFile)" />
+    <File Include="@(ArchitectureSpecificFile)" />
     <File Include="@(ArchitectureSpecificToolFile)">
       <TargetPath>tools</TargetPath>
     </File>
