@@ -361,6 +361,7 @@ namespace $([System.String]::Copy($(Category)).Replace(".","_").Replace("\","").
     </ItemGroup>
     <PropertyGroup>
       <CoreclrPackageFileName>%(CoreclrPackage.Filename)</CoreclrPackageFileName>
+      <CoreclrPackageFileName Condition="'$(BuildTestsAgainstPackages)'=='true'">$(CoreClrExpectedPrerelease)</CoreclrPackageFileName>
       <!-- Get package version number from nuget package filename at core_root -->
       <CoreclrPackageVersion>$([System.String]::Copy('$(CoreclrPackageFileName)').Replace('Microsoft.NETCore.Runtime.CoreCLR.',''))</CoreclrPackageVersion>
       <TestRuntimeJsonContents>

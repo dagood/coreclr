@@ -34,20 +34,30 @@ function UpdateValidDependencyVersionsFile
         return $false
     }
 
-    $DirPropsPath = "$PSScriptRoot\dir.props"
-    
-    $DirPropsContent = Get-Content $DirPropsPath | % {
-        $line = $_
-        $DirPropsVersionElements | % {
-            $line = $line -replace `
-                "<$_>.*</$_>", `
-                "<$_>$LatestVersion</$_>"
-        }
-        $line
+    $DirPropsPaths = @("$PSScriptRoot\dir.props", "$PSScriptRoot\tests\dir.props")
+
+    $DirPropsPaths | %{
+       $DirPropsContent = Get-Content $_ | %{
+            $line = $_
+            $DirPropsVersionElements | %{
+                $line = $line -replace `
+                    "<$_>.*</$_>", `
+                    "<$_>$LatestVersion</$_>"
+            }
+            $line
+       }
+       Set-Content $_ $DirPropsContent
     }
-    Set-Content $DirPropsPath $DirPropsContent
 
     return $true
+}
+
+# Updates all the project.json files with out of date version numbers
+function RunUpdatePackageDependencyVersions
+{
+    cmd /c $PSScriptRoot\tests\buildtest.cmd updateinvalidpackages | Out-Host
+
+    return $LASTEXITCODE -eq 0
 }
 
 # Creates a Pull Request for the updated version numbers
@@ -109,6 +119,11 @@ function CreatePullRequest
 }
 
 if (!(UpdateValidDependencyVersionsFile))
+{
+    Exit -1
+}
+
+if (!(RunUpdatePackageDependencyVersions))
 {
     Exit -1
 }
