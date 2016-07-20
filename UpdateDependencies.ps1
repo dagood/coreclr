@@ -22,6 +22,15 @@ param(
 $LatestVersion = Invoke-WebRequest $VersionFileUrl -UseBasicParsing
 $LatestVersion = $LatestVersion.ToString().Trim()
 
+if ($DirPropsVersionElements -contains 'CoreClrExpectedPrerelease')
+{
+    # Also get list of all package versions, relative to the given prerelease version url.
+    $LatestPackagesListUrl = $VersionFileUrl -Replace 'Latest.txt', 'Latest_Packages.txt'
+    $LatestPackagesList = Invoke-WebRequest $LatestPackagesListUrl -UseBasicParsing
+    $LatestCoreCLRPackage = $LatestPackagesList -split "`n" | ?{ $_.StartsWith('Microsoft.NETCore.Runtime.CoreCLR') }
+    $LatestCoreCLRVersion = ($LatestCoreCLRPackage -split ' ')[1].Trim()
+}
+
 # Make a nicely formatted string of the dir props version elements. Short names, joined by commas.
 $DirPropsVersionNames = ($DirPropsVersionElements | %{ $_ -replace 'ExpectedPrerelease', '' }) -join ', '
 
@@ -39,11 +48,20 @@ function UpdateValidDependencyVersionsFile
     $DirPropsPaths | %{
        $DirPropsContent = Get-Content $_ | %{
             $line = $_
+
             $DirPropsVersionElements | %{
                 $line = $line -replace `
                     "<$_>.*</$_>", `
                     "<$_>$LatestVersion</$_>"
             }
+
+            if ($LatestCoreCLRVersion)
+            {
+                $line = $line -replace `
+                    "<CoreClrPackageVersion>.*<", `
+                    "<CoreClrPackageVersion>$LatestCoreCLRVersion<"
+            }
+
             $line
        }
        Set-Content $_ $DirPropsContent
