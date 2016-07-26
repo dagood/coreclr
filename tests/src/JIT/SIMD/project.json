@@ -14,7 +14,7 @@
     "System.IO.FileSystem": "4.0.2-beta-24326-03"
   },
   "frameworks": {
-    "dnxcore50": {}
+    "netstandard1.6": {}
   },
   "runtimes": {
     "win7-x86": {},

@@ -7,7 +7,7 @@
     "System.Runtime.Extensions": "4.1.0"
   },
   "frameworks": {
-    "dnxcore50": {}
+    "netstandard1.6": {}
   },
   "runtimes": {
     "win7-x86": {},

@@ -26,7 +26,7 @@
     "xunit.runner.utility": "2.1.0"
   },
   "frameworks": {
-    "dnxcore50": {
+    "netstandard1.6": {
       "imports": "portable-net45+win8"
     }
   },

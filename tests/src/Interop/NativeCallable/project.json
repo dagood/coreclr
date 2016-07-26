@@ -1,7 +1,7 @@
 {
   "dependencies": {},
   "frameworks": {
-    "dnxcore50": {}
+    "netstandard1.6": {}
   },
   "runtimes": {
     "win7-x86": {},

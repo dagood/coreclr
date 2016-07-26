@@ -23,7 +23,7 @@
     "System.Security.Cryptography.Algorithms": "4.2.1-beta-24326-03"
   },
   "frameworks": {
-    "dnxcore50": {
+    "netstandard1.6": {
       "imports": [
         "netstandard1.6",
         "portable-net45+win8"
