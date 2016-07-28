@@ -43,7 +43,7 @@
     <ValidatePackageVersions>true</ValidatePackageVersions>
     <ProhibitFloatingDependencies>true</ProhibitFloatingDependencies>
 
-    <CoreFxExpectedPrerelease>beta-24326-03</CoreFxExpectedPrerelease>
+    <CoreFxExpectedPrerelease>beta-24328-05</CoreFxExpectedPrerelease>
     <CoreClrPackageVersion>1.0.4-beta-24325-02</CoreClrPackageVersion>
 
     <CoreFxVersionsIdentityRegex>^(?i)((System\..*)|(Microsoft\.CSharp)|(Microsoft\.NETCore.*)|(Microsoft\.Win32\..*)|(Microsoft\.VisualBasic))(?&lt;!TestData)$</CoreFxVersionsIdentityRegex>
