@@ -19,6 +19,6 @@
     "System.Xml.XmlSerializer": "4.0.12-beta-24328-05"
   },
   "frameworks": {
-    "netstandard1.6": {}
+    "netcoreapp1.0": {}
   }
 }

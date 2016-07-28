@@ -27,9 +27,9 @@
     }
   },
   "frameworks": {
-    "netstandard1.6": {
+    "netcoreapp1.0": {
       "imports": [
-        "netstandard1.6",
+        "netcoreapp1.0",
         "portable-net45+win8"
       ]
     }
