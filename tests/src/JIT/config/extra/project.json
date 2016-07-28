@@ -15,7 +15,11 @@
     "System.Runtime": "4.1.1-beta-24326-03",
     "System.Runtime.Extensions": "4.1.0",
     "System.Runtime.CompilerServices.Unsafe": "4.0.1-beta-24326-03",
-    "System.Runtime.InteropServices": "4.2.0-beta-24326-03"
+    "System.Runtime.InteropServices": "4.2.0-beta-24326-03",  
+    "test_runtime": {
+      "targets": "project",
+      "exclude": "compile"
+    }
   },
   "frameworks": {
     "netstandard1.6": {}

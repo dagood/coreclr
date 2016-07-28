@@ -3,7 +3,11 @@
     "Microsoft.NETCore.Platforms": "1.0.2-beta-24326-03",
     "System.Console": "4.0.1-beta-24326-03",
     "System.Runtime": "4.1.1-beta-24326-03",
-    "System.Runtime.InteropServices": "4.2.0-beta-24326-03"
+    "System.Runtime.InteropServices": "4.2.0-beta-24326-03",  
+    "test_runtime": {
+      "targets": "project",
+      "exclude": "compile"
+    }
   },
   "frameworks": {
     "netstandard1.6": {}
