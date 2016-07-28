@@ -2,11 +2,7 @@
   "dependencies": {
     "xunit": "2.1.0",
     "xunit.assert": "2.1.0",
-    "xunit.core": "2.1.0",  
-    "test_runtime": {
-      "target": "project",
-      "exclude": "compile"
-    }
+    "xunit.core": "2.1.0"
   },
   "frameworks": {
     "net45": {
