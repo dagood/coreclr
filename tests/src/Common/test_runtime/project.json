@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "Microsoft.NETCore.Targets": "1.0.3-beta-24327-03",
+    "Microsoft.NETCore.Targets": "1.0.3-beta-24328-05",
     "System.Collections.Concurrent": "4.0.13-beta-24328-05",
     "System.Collections.Immutable": "1.2.1-beta-24328-05",
     "System.Diagnostics.Tracing": "4.1.1-beta-24328-05",
