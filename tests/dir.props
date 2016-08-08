@@ -43,11 +43,43 @@
     <ValidatePackageVersions>true</ValidatePackageVersions>
     <ProhibitFloatingDependencies>true</ProhibitFloatingDependencies>
 
-    <CoreFxExpectedPrerelease>beta-24328-05</CoreFxExpectedPrerelease>
-    <CoreClrPackageVersion>1.0.4-beta-24325-02</CoreClrPackageVersion>
+    <CoreFxExpectedPrerelease>beta-24404-99</CoreFxExpectedPrerelease>
+    <CoreClrPackageVersion>1.0.4-beta-24408-03</CoreClrPackageVersion>
 
     <CoreFxVersionsIdentityRegex>^(?i)((System\..*)|(Microsoft\.CSharp)|(Microsoft\.NETCore.*)|(Microsoft\.Win32\..*)|(Microsoft\.VisualBasic))(?&lt;!TestData)$</CoreFxVersionsIdentityRegex>
+
+    <BaseDotNetBuildInfoUrl>https://raw.githubusercontent.com/dotnet/versions/master/build-info/dotnet/</BaseDotNetBuildInfoUrl>
+    <DependencyBranch>master</DependencyBranch>
   </PropertyGroup>
+
+  <!-- Dependency auto-upgrade configuration -->
+  <ItemGroup>
+    <DependencyBuildInfo Include="CoreFx">
+      <RawUrl>$(BaseDotNetBuildInfoUrl)corefx/$(DependencyBranch)</RawUrl>
+    </DependencyBuildInfo>
+    <DependencyBuildInfo Include="CoreClr">
+      <RawUrl>$(BaseDotNetBuildInfoUrl)coreclr/$(DependencyBranch)</RawUrl>
+    </DependencyBuildInfo>
+    <DependencyBuildInfo Include="External">
+      <RawUrl>$(BaseDotNetBuildInfoUrl)projectk-tfs/$(DependencyBranch)</RawUrl>
+    </DependencyBuildInfo>
+
+    <XmlUpdateStep Include="CoreFx">
+      <Path>$(MSBuildThisFileFullPath)</Path>
+      <ElementName>CoreFxExpectedPrerelease</ElementName>
+      <BuildInfoName>CoreFx</BuildInfoName>
+    </XmlUpdateStep>
+    <XmlUpdateStep Include="CoreClr">
+      <Path>$(MSBuildThisFileFullPath)</Path>
+      <ElementName>CoreClrPackageVersion</ElementName>
+      <PackageId>Microsoft.NETCore.Runtime.CoreCLR</PackageId>
+    </XmlUpdateStep>
+    <XmlUpdateStep Include="External">
+      <Path>$(MSBuildThisFileDirectory)..\dir.props</Path>
+      <ElementName>ExternalExpectedPrerelease</ElementName>
+      <BuildInfoName>External</BuildInfoName>
+    </XmlUpdateStep>
+  </ItemGroup>
 
   <ItemGroup>
     <ValidationPattern Include="CoreFxVersions">
