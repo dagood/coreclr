@@ -21,8 +21,6 @@
     <ArchitectureSpecificLibFile Include="$(BinDir)System.Private.CoreLib.dll" />
     <ArchitectureSpecificLibFile Include="$(BinDir)SOS.NETCore.dll" />
     <ArchitectureSpecificToolFile Include="$(BinDir)crossgen" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalSymbolPackageExcludes Include="%2A%2A\%2A.dll" />
     <AdditionalSymbolPackageExcludes Include="%2A%2A\sosdocsunix.txt" />
     <AdditionalSymbolPackageExcludes Include="%2A%2A\crossgen" />
