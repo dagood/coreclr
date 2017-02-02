@@ -15,13 +15,12 @@
     <NativeSplittableBinary Include="$(BinDir)libsos.dylib" />
     <NativeSplittableBinary Include="$(BinDir)System.Globalization.Native.dylib" />
     <ArchitectureSpecificNativeFile Include="$(BinDir)sosdocsunix.txt" />
-    <ArchitectureSpecificNativeFile Include="$(BinDir)mscorlib.ni.dll" />
-    <ArchitectureSpecificNativeFile Include="$(BinDir)System.Private.CoreLib.ni.dll" />
+    <ArchitectureSpecificNativeFileAndSymbol Include="$(BinDir)mscorlib.ni.dll" />
+    <ArchitectureSpecificNativeFileAndSymbol Include="$(BinDir)System.Private.CoreLib.ni.dll" />
     <ArchitectureSpecificLibFile Include="$(BinDir)mscorlib.dll" />
     <ArchitectureSpecificLibFile Include="$(BinDir)System.Private.CoreLib.dll" />
     <ArchitectureSpecificLibFile Include="$(BinDir)SOS.NETCore.dll" />
     <ArchitectureSpecificToolFile Include="$(BinDir)crossgen" />
-    <AdditionalSymbolPackageExcludes Include="%2A%2A\%2A.dll" />
     <AdditionalSymbolPackageExcludes Include="%2A%2A\sosdocsunix.txt" />
     <AdditionalSymbolPackageExcludes Include="%2A%2A\crossgen" />
   </ItemGroup>
