@@ -55,15 +55,22 @@
 
   <Target Name="GetSymbolPackageFiles" BeforeTargets="GetPackageFiles">
     <ItemGroup>
-      <!-- On Windows, trim ".dll" before adding ".pdb". On xplat, the symbol extension is simply appended. -->
-      <NativeDllFileWithoutExtension Include="@(NativeWithSymbolFile -> '%(RootDir)%(Directory)PDB\%(Filename)')"
-                                     Condition="'%(NativeWithSymbolFile.Extension)'=='.dll' OR '%(NativeWithSymbolFile.Extension)'=='.exe'" />
-      <NativeSoFile Include="@(NativeWithSymbolFile)" Condition="'%(NativeWithSymbolFile.Extension)'=='.so'" />
-      <NativeDylibFile Include="@(NativeWithSymbolFile)" Condition="'%(NativeWithSymbolFile.Extension)'=='.dylib'" />
-
+      <!-- On Windows, trim ".dll" before adding ".pdb". -->
+      <WindowsNativeFile Include="@(NativeWithSymbolFile)"
+                         Condition="'%(NativeWithSymbolFile.Extension)'=='.dll' OR '%(NativeWithSymbolFile.Extension)'=='.exe'" />
+      <NativeDllFileWithoutExtension Include="@(WindowsNativeFile -> '%(RootDir)%(Directory)PDB\%(Filename)')" />
       <WindowsSymbolFile Include="@(NativeDllFileWithoutExtension -> '%(Identity).pdb')" />
-      <NonWindowsSymbolFile Include="@(NativeSoFile -> '%(Identity).dbg')" />
-      <NonWindowsSymbolFile Include="@(NativeDylibFile -> '%(Identity).dwarf')" />
+
+      <!--
+        Search for all xplat symbol file extensions on every xplat native binary. Some binaries have
+        no ".so" or ".dylib" extension, so we can't tell which convention its symbol files would
+        use. On xplat, the symbol extension is simply appended. 
+      -->
+      <NonWindowsNativeFile Include="@(NativeWithSymbolFile)"
+                            Exclude="@(WindowsNativeFile)" />
+
+      <NonWindowsSymbolFile Include="@(NonWindowsNativeFile -> '%(Identity).dbg')" />
+      <NonWindowsSymbolFile Include="@(NonWindowsNativeFile -> '%(Identity).dwarf')" />
 
       <ExistingWindowsSymbolFile Include="@(WindowsSymbolFile)" Condition="Exists('%(Identity)')" />
       <ExistingNonWindowsSymbolFile Include="@(NonWindowsSymbolFile)" Condition="Exists('%(Identity)') AND '$(SkipPackagingXplatSymbols)'!='true'" />
