@@ -19,8 +19,11 @@
   </Choose>
 
   <ItemGroup>
-    <AdditionalLibPackageExcludes Condition="'$(SymbolFileExtension)' != ''" Include="%2A%2A\%2A$(SymbolFileExtension)" />
-    <AdditionalSymbolPackageExcludes Condition="'$(LibraryFileExtension)' != ''" Include="%2A%2A\%2A.a;%2A%2A\%2A$(LibraryFileExtension)" />
+    <AdditionalLibPackageExcludes Include="%2A%2A\%2A$(SymbolFileExtension);
+                                           %2A%2A\%2A.dll"
+                                  Condition="'$(SymbolFileExtension)' != ''" />
+    <AdditionalSymbolPackageExcludes Include="%2A%2A\%2A.a;%2A%2A\%2A$(LibraryFileExtension)"
+                                     Condition="'$(LibraryFileExtension)' != ''" />
   </ItemGroup>
 
   <ItemGroup>
