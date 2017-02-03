@@ -41,10 +41,6 @@
     </NativeWithSymbolFile>
 
     <File Include="@(NativeWithSymbolFile)" />
-    <!-- No reference: don't permit reference to the implementation from lib -->
-    <File Include="$(PlaceholderFile)">
-      <TargetPath>ref/netstandard1.0</TargetPath>
-    </File>
     <File Condition="'$(HasCrossTargetComponents)'=='true'" Include="@(CrossArchitectureSpecificToolFile)">
       <TargetPath>tools/$(CrossTargetComponentFolder)_$(PackagePlatform)</TargetPath>
     </File>
