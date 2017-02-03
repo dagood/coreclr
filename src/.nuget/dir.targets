@@ -18,12 +18,13 @@
     </Otherwise>
   </Choose>
 
-  <ItemGroup>
-    <AdditionalLibPackageExcludes Include="%2A%2A\%2A$(SymbolFileExtension);
-                                           %2A%2A\%2A.dll"
-                                  Condition="'$(SymbolFileExtension)' != ''" />
-    <AdditionalSymbolPackageExcludes Include="%2A%2A\%2A.a;%2A%2A\%2A$(LibraryFileExtension)"
-                                     Condition="'$(LibraryFileExtension)' != ''" />
+  <ItemGroup Condition="'$(SymbolFileExtension)' != ''">
+    <AdditionalLibPackageExcludes Include="%2A%2A\%2A$(SymbolFileExtension)"/>
+  </ItemGroup>
+  <ItemGroup Condition="'$(LibraryFileExtension)' != ''">
+    <AdditionalSymbolPackageExcludes Include="%2A%2A\%2A$(LibraryFileExtension)"/>
+    <AdditionalSymbolPackageExcludes Include="%2A%2A\%2A.a"/>
+    <AdditionalSymbolPackageExcludes Include="%2A%2A\%2A.dll"/>
   </ItemGroup>
 
   <ItemGroup>
