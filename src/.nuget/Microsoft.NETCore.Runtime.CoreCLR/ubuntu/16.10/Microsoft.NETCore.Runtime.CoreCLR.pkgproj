@@ -24,10 +24,6 @@
     <ArchitectureSpecificLibFile Include="$(BinDir)SOS.NETCore.dll" />
     <ArchitectureSpecificToolFile Include="$(BinDir)crossgen" />
     <!-- Using lib/netstandard1.0 here.  There is no TFM for this since it is a runtime itself. -->
-    <!-- No reference: don't permit reference to the implementation from lib -->
-    <File Include="$(PlaceholderFile)">
-      <TargetPath>ref/netstandard1.0</TargetPath>
-    </File>
   </ItemGroup>
   <ItemGroup Condition="'$(__BuildType)' == 'Release'">
     <AdditionalSymbolPackageExcludes Include="%2A%2A\sosdocsunix.txt" />
