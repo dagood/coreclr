@@ -30,6 +30,7 @@
   <ItemGroup>
     <NativeWithSymbolFile Include="@(NativeSplittableBinary);
                                    @(NativeBinary);
+                                   @(ArchitectureSpecificNativeFile);
                                    @(ArchitectureSpecificNativeFileAndSymbol)">
       <TargetPath>runtimes/$(PackageTargetRuntime)/native</TargetPath>
     </NativeWithSymbolFile>
