@@ -34,9 +34,6 @@
                                    @(ArchitectureSpecificNativeFileAndSymbol)">
       <TargetPath>runtimes/$(PackageTargetRuntime)/native</TargetPath>
     </NativeWithSymbolFile>
-    <NativeWithSymbolFile Include="@(CrossArchitectureSpecificNativeSymbol)">
-      <TargetPath>tools\$(CrossTargetComponentFolder)_$(PackagePlatform)</TargetPath>
-    </NativeWithSymbolFile>
     <!-- Using lib/netstandard1.0 here.  There is no TFM for this since it is a runtime itself. -->
     <NativeWithSymbolFile Include="@(ArchitectureSpecificLibFile)">
       <TargetPath>runtimes/$(PackageTargetRuntime)/lib/netstandard1.0</TargetPath>
@@ -44,15 +41,33 @@
     <NativeWithSymbolFile Include="@(ArchitectureSpecificToolFile)">
       <TargetPath>tools</TargetPath>
     </NativeWithSymbolFile>
-
-    <File Include="@(NativeWithSymbolFile)" />
-    <File Condition="'$(HasCrossTargetComponents)'=='true'" Include="@(CrossArchitectureSpecificToolFile)">
-      <TargetPath>tools/$(CrossTargetComponentFolder)_$(PackagePlatform)</TargetPath>
-    </File>
-    <File Condition="'$(HasCrossTargetComponents)'=='true'" Include="@(CrossArchitectureSpecificNativeFile)">
-      <TargetPath>runtimes/$(CrossTargetComponentFolder)_$(PackagePlatform)/native</TargetPath>
-    </File>
   </ItemGroup>
+
+  <ItemGroup Condition="'$(HasCrossTargetComponents)'=='true'">
+    <NativeWithSymbolFile Include="@(CrossArchitectureSpecificNativeFileAndSymbol)">
+      <TargetPath Condition="'%(TargetPath)'==''">runtimes/$(CrossTargetComponentFolder)_$(PackagePlatform)/native</TargetPath>
+    </NativeWithSymbolFile>
+    <NativeWithSymbolFile Include="@(CrossArchitectureSpecificToolFile)">
+      <TargetPath>tools/$(CrossTargetComponentFolder)_$(PackagePlatform)</TargetPath>
+    </NativeWithSymbolFile>
+  </ItemGroup>
+
+  <ItemGroup >
+    <File Include="@(NativeWithSymbolFile)" />
+  </ItemGroup>
+
+  <Target Name="CopyLongNamedBinaries" BeforeTargets="CreatePackage">
+    <ItemGroup>
+      <LongNameFile Include="@(NativeWithSymbolFile)"
+                    Condition="'%(NativeWithSymbolFile.LongName)'=='true'" />
+
+      <!-- Only include long-name DAC/SOS in symbol package. -->
+      <AdditionalLibPackageExcludes Include="@(LongNameFile -> '%2A%2A\%(Filename)%(Extension)')" />
+    </ItemGroup>
+
+    <Copy SourceFiles="%(CopySourcePath)"
+          DestinationFiles="@(LongNameFile)" />
+  </Target>
 
   <Target Name="GetSymbolPackageFiles" BeforeTargets="GetPackageFiles">
     <ItemGroup>
