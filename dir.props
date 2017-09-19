@@ -96,6 +96,9 @@
     <OutputPath Condition="'$(OutputPath)' == ''">$(BinDir)</OutputPath>
   </PropertyGroup>
 
+  <!-- Implement Repo API. Ideally moved to BuildTools, brought in by Build.Common.props. -->
+  <Import Project="$(ProjectDir)SourceBuild.RepoApi.props" />
+
   <!-- Import Build tools common props file where repo-independent properties are found -->
   <Import Condition="Exists('$(ToolsDir)Build.Common.props')" Project="$(ToolsDir)Build.Common.props" />
 
