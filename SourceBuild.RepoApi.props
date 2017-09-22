@@ -2,6 +2,6 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- Plug in Repo API arguments to the properties that control BuildTools. -->
-    <PackageOutputPath Condition="'$(DotNet_OutputBlobFeedDir)' != ''">$(DotNet_OutputBlobFeedDir)packages/</PackageOutputPath>
+    <PackageOutputPath Condition="'$(DotNetOutputBlobFeedDir)' != ''">$(DotNetOutputBlobFeedDir)packages/</PackageOutputPath>
   </PropertyGroup>
 </Project>
